@@ -43,7 +43,16 @@ export default function Users() {
         placeholder="Enter user name"
       />
 
-      <Button onClick={() => createUser.mutate({ name })}>
+      <Button
+        onClick={() =>
+          createUser.mutate(
+            { name },
+            {
+              onError: () => alert("Failed to create user"),
+            }
+          )
+        }
+      >
         Add User
       </Button>
 
@@ -51,7 +60,13 @@ export default function Users() {
         {data?.map((user) => (
           <li key={user.id} style={{ marginTop: 10 }}>
             {user.name}
-            <Button onClick={() => deleteUser.mutate(user.id)}>
+            <Button
+              onClick={() =>
+                deleteUser.mutate(user.id, {
+                  onError: () => alert("Failed to delete user"),
+                })
+              }
+            >
               Delete
             </Button>
           </li>
